@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.tab {
+    padding: 8px 24px;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    position: relative;
+    white-space: nowrap;
+    transition: all 0.3s;
+    color: var(--text-secondary);
+    background-color: #1a1a24;
+}
+
+.tab:hover {
+    background-color: #252532;
+    color: var(--text-primary);
+}
+
+.activeTab {
+    color: #000;
+    font-weight: 700;
+    background: transparent;
+}
+
+.indicator {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+    border-radius: 9999px;
+}
+
+.text {
+    position: relative;
+    z-index: 10;
+}

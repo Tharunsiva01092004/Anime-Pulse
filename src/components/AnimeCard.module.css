@@ -1,0 +1,161 @@
+.card {
+    position: relative;
+    border-radius: 12px;
+    background-color: var(--bg-card);
+    /* Slightly sharper corners */
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 8px 25px rgba(0, 255, 255, 0.15);
+    z-index: 20;
+}
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+    padding-top: 140%;
+    /* Force standard 2:3 Anime Poster aspect ratio */
+    overflow: hidden;
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.0s ease;
+    /* No zoom on hover for cleaner grid */
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+}
+
+.timeBadge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    padding: 3px 6px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    font-family: monospace;
+    color: var(--accent-cyan);
+    z-index: 20;
+}
+
+.content {
+    padding: 12px;
+    position: relative;
+    z-index: 10;
+    background-color: var(--bg-card);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 0.95rem;
+    /* Slightly smaller text for list density */
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s;
+}
+
+.card:hover .title {
+    color: var(--accent-cyan);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.65rem;
+    /* text-transform: uppercase; */
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+
+.footer {
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid #2d2d3a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+}
+
+.nextEp {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+}
+
+.countdown {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+}
+
+.activeCountdown {
+    color: var(--accent-cyan);
+    animation: pulse 2s infinite;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.airingNow {
+    color: #ff3333;
+    /* Neon Red for LIVE status */
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}

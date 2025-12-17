@@ -1,0 +1,124 @@
+.loaderContainer {
+    display: flex;
+    height: 256px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader {
+    color: var(--accent-cyan);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.stickyHeader {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: rgba(10, 10, 15, 0.9);
+    backdrop-filter: blur(12px);
+    padding: 16px 0;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #2d2d3a;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+}
+
+@media (min-width: 450px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+/* Staggered animation for grid items would require nth-child delay, 
+   but for now a global simple fade in is smoother than instant. */
+.grid>* {
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@media (min-width: 640px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (min-width: 1536px) {
+    .grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (min-width: 1800px) {
+    .grid {
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+
+/* End of grid media queries */
+
+.empty {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 80px 0;
+}
+
+.weekControls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    gap: 20px;
+}
+
+@media (max-width: 640px) {
+    .weekControls {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
