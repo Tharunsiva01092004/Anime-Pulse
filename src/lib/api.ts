@@ -41,38 +41,50 @@ interface JikanResponse {
 // Cache the schedule to avoid hitting API limit on every render if we were server-side properly,
 // but for client-side demo we might just fetch.
 export async function getWeeklySchedule(): Promise<Anime[]> {
-    const allAnime: Anime[] = [];
-    let page = 1;
-    let hasNext = true;
+    const allAnimeMap = new Map<number, Anime>();
 
-    // Limit to 10 pages to ensure we catch all seasonal and continuing shows
-    while (hasNext && page <= 10) {
-        try {
-            const res = await fetch(`https://api.jikan.moe/v4/schedules?page=${page}&sfw=true`);
-
-            if (res.status === 429) {
-                // Rate limited
-                await new Promise(r => setTimeout(r, 1000));
-                continue;
+    const fetchEndpoint = async (url: string, maxPages: number = 3) => {
+        let page = 1;
+        let hasNext = true;
+        while (hasNext && page <= maxPages) {
+            try {
+                const res = await fetch(`${url}${url.includes('?') ? '&' : '?'}page=${page}&sfw=true`);
+                if (res.status === 429) {
+                    await new Promise(r => setTimeout(r, 1500)); // Be gentler on rate limit
+                    continue;
+                }
+                if (!res.ok) break;
+                const data: JikanResponse = await res.json();
+                data.data.forEach(anime => {
+                    // We store anything that has EITHER a broadcast schedule OR a set airing start date
+                    // This catches upcoming premieres that don't have a standardized weekly slot yet.
+                    if ((anime.broadcast.day && anime.broadcast.time) || anime.aired.from) {
+                        allAnimeMap.set(anime.mal_id, anime);
+                    }
+                });
+                hasNext = data.pagination.has_next_page;
+                page++;
+                await new Promise(r => setTimeout(r, 500));
+            } catch (error) {
+                console.error(`Fetch error for ${url}:`, error);
+                break;
             }
-
-            if (!res.ok) break;
-
-            const data: JikanResponse = await res.json();
-            allAnime.push(...data.data);
-            hasNext = data.pagination.has_next_page;
-            page++;
-
-            // Jikan rate limit: 3 requests per second.
-            await new Promise(r => setTimeout(r, 350));
-        } catch (error) {
-            console.error("Fetch error:", error);
-            break;
         }
-    }
+    };
 
-    // Filter out items with no broadcast time (some specials/OVAs might appear)
-    return allAnime.filter(a => a.broadcast.day && a.broadcast.time);
+    // 1. Fetch current week's schedule
+    await fetchEndpoint('https://api.jikan.moe/v4/schedules', 6);
+
+    // 2. Fetch current season's anime
+    await fetchEndpoint('https://api.jikan.moe/v4/seasons/now', 4);
+
+    // 3. Fetch Top Airing (best for trending/up-to-date shows)
+    await fetchEndpoint('https://api.jikan.moe/v4/top/anime?filter=airing', 2);
+
+    // 4. Fetch upcoming season (captures reveals/premieres starting very soon)
+    await fetchEndpoint('https://api.jikan.moe/v4/seasons/upcoming', 2);
+
+    return Array.from(allAnimeMap.values());
 }
 
 export async function getCompletedAnime(): Promise<Anime[]> {

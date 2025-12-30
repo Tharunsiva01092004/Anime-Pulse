@@ -4,8 +4,8 @@ import { Search, Bell, User, LayoutGrid, CalendarRange, Archive } from 'lucide-r
 import styles from './Navbar.module.css';
 
 interface NavbarProps {
-    viewMode: 'grid' | 'weekly' | 'archive';
-    setViewMode: (mode: 'grid' | 'weekly' | 'archive') => void;
+    viewMode: 'grid' | 'weekly' | 'archive' | 'premieres';
+    setViewMode: (mode: 'grid' | 'weekly' | 'archive' | 'premieres') => void;
     searchTerm: string;
     setSearchTerm: (term: string) => void;
 }
@@ -29,6 +29,12 @@ export function Navbar({ viewMode, setViewMode, searchTerm, setSearchTerm }: Nav
                     onClick={() => setViewMode('weekly')}
                 >
                     Weekly
+                </button>
+                <button
+                    className={`${styles.navBtn} ${viewMode === 'premieres' ? styles.active : ''}`}
+                    onClick={() => setViewMode('premieres')}
+                >
+                    Premieres
                 </button>
                 <button
                     className={`${styles.navBtn} ${viewMode === 'archive' ? styles.active : ''}`}

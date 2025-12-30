@@ -36,6 +36,8 @@ export function AnimeCard({ anime, broadcastDate }: AnimeCardProps) {
         return () => clearInterval(interval);
     }, [broadcastDate]);
 
+    const isPremiere = anime.aired.from && (new Date().getTime() - new Date(anime.aired.from).getTime()) < (7 * 24 * 60 * 60 * 1000) && (new Date().getTime() - new Date(anime.aired.from).getTime()) > - (24 * 60 * 60 * 1000);
+
     return (
         <div className={styles.card}>
             {/* Image Container */}
@@ -50,6 +52,20 @@ export function AnimeCard({ anime, broadcastDate }: AnimeCardProps) {
                 />
                 <div className={styles.overlay} />
 
+                {/* Score Badge */}
+                {anime.score && (
+                    <div className={styles.scoreBadge}>
+                        ★ {anime.score.toFixed(1)}
+                    </div>
+                )}
+
+                {/* Premiere Badge */}
+                {isPremiere && (
+                    <div className={styles.newBadge}>
+                        Premiere
+                    </div>
+                )}
+
                 {/* Time Badge */}
                 <div className={styles.timeBadge}>
                     <Clock size={12} />
@@ -59,6 +75,12 @@ export function AnimeCard({ anime, broadcastDate }: AnimeCardProps) {
 
             {/* Content */}
             <div className={styles.content}>
+                <div className={styles.metaInfo}>
+                    <span>{anime.type || 'TV'}</span>
+                    <span>•</span>
+                    <span>{anime.broadcast.timezone?.replace('Asia/', '') || 'JST'}</span>
+                </div>
+
                 <h3 className={styles.title}>
                     {anime.title_english || anime.title}
                 </h3>

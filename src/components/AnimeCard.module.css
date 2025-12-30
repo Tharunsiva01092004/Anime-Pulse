@@ -63,6 +63,39 @@
     z-index: 20;
 }
 
+.scoreBadge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background-color: rgba(0, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    padding: 3px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    z-index: 20;
+}
+
+.newBadge {
+    position: absolute;
+    top: 40px;
+    left: 6px;
+    background: linear-gradient(135deg, #ff00ff, #7000ff);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    z-index: 20;
+    box-shadow: 0 2px 10px rgba(255, 0, 255, 0.3);
+}
+
 .content {
     padding: 12px;
     position: relative;
@@ -109,6 +142,16 @@
     padding: 2px 6px;
     border-radius: 4px;
     color: var(--text-secondary);
+}
+
+.metaInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    opacity: 0.6;
 }
 
 .footer {

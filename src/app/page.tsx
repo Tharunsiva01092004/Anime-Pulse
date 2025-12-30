@@ -6,7 +6,7 @@ import { ScheduleComponent } from '@/components/Schedule';
 import { Navbar } from '@/components/Navbar';
 
 export default function Home() {
-  const [viewMode, setViewMode] = useState<'grid' | 'weekly' | 'archive'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'weekly' | 'archive' | 'premieres'>('grid');
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
